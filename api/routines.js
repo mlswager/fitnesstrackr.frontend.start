@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllPublicRoutines, createRoutine, updateRoutine, getRoutineById, destroyRoutine, addActivityToRoutine, getRoutineActivitiesByRoutine } = require('../db');
+const { getAllPublicRoutines, createRoutine, updateRoutine, getRoutineById, destroyRoutine, addActivityToRoutine, getRoutineActivitiesByRoutine, getAllRoutinesByUser } = require('../db');
 const { requireUser, requiredNotSent } = require('./utils')
 
 
@@ -12,6 +12,19 @@ router.get('/', async (req, res, next) => {
     const routines = await getAllPublicRoutines();
     res.send(routines);
   } catch (error) {
+    next(error)
+  }
+})
+
+//added GET /api/routines/:username --ended up not needing. this route was in users
+router.get('/:username',async (req,res,next)=>{
+  try{
+    const {username} = req.params
+    console.log("username: ",username)
+    const myRoutines = await getAllRoutinesByUser({username: username})
+    res.send(myRoutines)
+  }
+  catch(error){
     next(error)
   }
 })

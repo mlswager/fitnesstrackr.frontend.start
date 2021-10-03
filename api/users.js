@@ -8,6 +8,7 @@ const { JWT_SECRET = 'neverTell' } = process.env;
 
 // POST /api/users/login
 router.post('/login', async (req, res, next) => {
+  console.log("req.body: ",req.body)//added
   const { username, password } = req.body;
 
   // request must have both
@@ -37,6 +38,7 @@ router.post('/login', async (req, res, next) => {
 
 // POST /api/users/register
 router.post('/register', async (req, res, next) => {
+  console.log("req.body: ",req.body)//added
   try {
     const {username, password} = req.body;
     const queriedUser = await getUserByUsername(username);
@@ -83,6 +85,7 @@ router.get('/me', requireUser, async (req, res, next) => {
 
 // GET /api/users/:username/routines
 router.get('/:username/routines', async (req, res, next) => {
+  console.log("---starting route---")
   try {
     const {username} = req.params;
     const user = await getUserByUsername(username);
