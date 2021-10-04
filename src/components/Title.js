@@ -18,6 +18,7 @@ const Title = (props)=>{
                 {/* {token ? <h3 id="title-welcome">{`Hello ${user.username}`}</h3>: null} */}
                 {token ? <button id="logout" onClick={logoutFunc}>Logout</button>:<Link to = "/login">Login</Link>}
             <Link to = "/all-routines">All Routines</Link>
+            <Link to = "/all-activities">All Activities</Link>
             </div>
         </div>
     )

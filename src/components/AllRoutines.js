@@ -6,16 +6,14 @@ import AddRoutineActivities from "./AddRoutineActivity"
 import EditRoutineActivity from "./EditRoutineActivity"
 
 const AllRoutines = (props)=>{
-    let {token,setToken,user}=props
+    let {token,user,refresh,setRefresh}=props
 
     /*------set state------*/
-    const[refresh,setRefresh]=useState("")
     const[allRoutines,setAllRoutines]=useState([])
     const[myRoutines,setMyRoutines]=useState([])
-    const[routineId,setRoutineId]=useState("")
     const[activitiesList,setActivitiesList]=useState([])
     //console.log("user: ",user)
-    /*------Load page------*/
+    /*------load page------*/
     useEffect(()=>{
         const loadPostsTokenYes = async()=>{
             /*---create list of routines to display---*/
@@ -52,7 +50,7 @@ const AllRoutines = (props)=>{
             try{
                 const activitiesList = await axios.get(`/api/activities`)
                 console.log("activities: ",activitiesList.data)
-                setActivitiesList(activitiesList.data)
+                setActivitiesList(activitiesList.data.reverse())
             }
             catch(error){
                 console.log("routine get activities error: ",error)
@@ -108,9 +106,9 @@ const AllRoutines = (props)=>{
                 let routineId=elementR.id
                 return(
                     <div key={elementR.id} className="routine-myroutine">
+                        {<button className="routine-delete" onClick={()=>{deleteRoutine(elementR.id)}}>Delete Routine</button>}
                         <h3>{elementR.name}</h3>
                         <p className="routine-creatorname">creator: {elementR.creatorName}</p>
-                        {<button className="routine-delete" onClick={()=>{deleteRoutine(elementR.id)}}>Delete Routine</button>}
                         <p className="routine-goal">goal: {elementR.goal}</p>
                         {<AddRoutineActivities
                         token={token}
@@ -122,14 +120,13 @@ const AllRoutines = (props)=>{
                             let routineActivityId = elementA.routineActivityId
                             return(
                                 <div key={elementA.id} className="routine-activities">
-                                    <h3>{elementA.name}</h3>
                                     {<button className="routine-activity-delete" onClick={()=>{removeRoutineActivity(elementA.routineActivityId)}}>Remove Activity</button>}
-                                    <p className="routine-activity-count">count: {elementA.count}</p>
-                                    <p className="routine-activity-duration">duration: {elementA.duration}</p>
+                                    <h3>{elementA.name}</h3>
                                     {<EditRoutineActivity
                                     token={token}
                                     routineActivityId={routineActivityId}
                                     setRefresh={setRefresh}
+                                    elementA={elementA}
                                     />}
                                     <p className="routine-activity-description">description: {elementA.description}</p>
                                 </div>

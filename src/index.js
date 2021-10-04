@@ -8,6 +8,7 @@ import Register from "./components/Register"
 import Login from "./components/Login"
 import Title from "./components/Title"
 import AllRoutines from "./components/AllRoutines"
+import AllActivities from './components/AllActivities'
 
 
 /*---demo---*/
@@ -23,6 +24,7 @@ import AllRoutines from "./components/AllRoutines"
 const App = ()=>{
   const[token,setToken]=useState("")
   const[user,setUser]=useState("")
+  const[refresh,setRefresh]=useState("")
   
 
 
@@ -76,8 +78,19 @@ const App = ()=>{
       render={()=>
         <AllRoutines 
           token={token}
-          setToken = {setToken}
           user = {user}
+          refresh= {refresh}
+          setRefresh = {setRefresh}
+        />}
+    />
+    <Route
+      path="/all-activities"
+      render={()=>
+        <AllActivities 
+          token={token}
+          user = {user}
+          refresh = {refresh}
+          setRefresh = {setRefresh}
         />}
     />
 </Router>
